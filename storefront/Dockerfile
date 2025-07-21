@@ -1,11 +1,10 @@
 FROM node:20-alpine
-WORKDIR /app/admin
-ENV NODE_OPTIONS=--openssl-legacy-provider
+WORKDIR /app/storefront
 COPY package.json .
 RUN apk update && apk add --no-cache python3 make g++
 RUN npm install -g npm@latest
 RUN npm install --loglevel=error
 COPY . .
 RUN npm run build
-EXPOSE 7000
+EXPOSE 8000
 CMD ["npm", "run", "start"]
