@@ -14,7 +14,7 @@ type Props = {
     page?: string
   }>
 }
-
+/*
 export async function generateStaticParams() {
   const product_categories = await listCategories()
 
@@ -41,7 +41,7 @@ export async function generateStaticParams() {
 
   return staticParams
 }
-
+*/
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   try {

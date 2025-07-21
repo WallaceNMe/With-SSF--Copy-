@@ -7,7 +7,7 @@ import ProductTemplate from "@modules/products/templates"
 type Props = {
   params: Promise<{ countryCode: string; handle: string }>
 }
-
+/*
 export async function generateStaticParams() {
   try {
     const countryCodes = await listRegions().then((regions) =>
@@ -49,7 +49,7 @@ export async function generateStaticParams() {
     return []
   }
 }
-
+*/
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const { handle } = params

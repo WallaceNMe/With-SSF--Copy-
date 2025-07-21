@@ -6,6 +6,7 @@ import { listRegions } from "@lib/data/regions"
 import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { getServerSideProps } from "next/dist/build/templates/pages"
 
 type Props = {
   params: Promise<{ handle: string; countryCode: string }>
@@ -17,6 +18,8 @@ type Props = {
 
 export const PRODUCT_LIMIT = 12
 
+export const dynamic = "force-dynamic"
+/*
 export async function generateStaticParams() {
   const { collections } = await listCollections({
     fields: "*products",
@@ -25,7 +28,6 @@ export async function generateStaticParams() {
   if (!collections) {
     return []
   }
-
   const countryCodes = await listRegions().then(
     (regions: StoreRegion[]) =>
       regions
@@ -49,7 +51,7 @@ export async function generateStaticParams() {
 
   return staticParams
 }
-
+*/
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const collection = await getCollectionByHandle(params.handle)

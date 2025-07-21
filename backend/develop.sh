@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
-medusa migrations run
+medusa migrations --action run
 
 medusa $1

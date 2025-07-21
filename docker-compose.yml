@@ -8,6 +8,8 @@ services:
     depends_on:
       - postgres
       - redis
+    ports: 
+      - "9000:9000"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
       REDIS_URL: redis://cache
@@ -18,8 +20,8 @@ services:
 
   postgres:
     image: postgres:10.4
-    ports:
-      - "5432:5432"
+    expose:
+      - 5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -31,17 +33,6 @@ services:
     expose:
       - 6379
 
-  admin:
-    build:
-      context: ./admin
-      dockerfile: Dockerfile
-    image: admin:test
-    depends_on:
-      - backend
-    container_name: medusa-admin
-    environment:
-      NODE_OPTIONS: --openssl-legacy-provider
-
   storefront:
     build:
       context: ./storefront
@@ -50,3 +41,7 @@ services:
     container_name: medusa-storefront
     depends_on:
       - backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./storefront/.env.local
