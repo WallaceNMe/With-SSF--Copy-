@@ -1,5 +1,5 @@
 #!/bin/sh
+set -e
 
-medusa migrations --action run
-
-medusa $1
+npx medusa db:migrate
+npx medusa develop
