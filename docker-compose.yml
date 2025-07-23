@@ -8,7 +8,7 @@ services:
     depends_on:
       - postgres
       - redis
-    ports: 
+    ports:
       - "9000:9000"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
@@ -17,16 +17,24 @@ services:
       JWT_SECRET: some_jwt_secret
       COOKIE_SECRET: some_cookie_secret
       PORT: 9000
+      # Add this line to explicitly disable publishable API keys for the backend
+      # if you're not using them, to prevent the "required" error.
+      # MEDUSA_FF_PUBLISHABLE_API_KEYS: "false" # Uncomment if you want to disable the feature
     command: ["develop"]
 
   postgres:
     image: postgres:10.4
+    container_name: withssf-postgres-1 # Explicitly naming for consistency if not already
     expose:
       - 5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: medusa-docker
+    # 👇 ADDED FOR DATABASE PERSISTENCE 👇
+    volumes:
+      - db_data:/var/lib/postgresql/data # Mounts the named volume to the data directory
+    # 👆 ADDED FOR DATABASE PERSISTENCE 👆
 
   redis:
     image: redis
@@ -46,3 +54,8 @@ services:
       - "8000:8000"
     env_file:
       - ./storefront/.env.local
+
+# 👇 ADDED TO DEFINE THE NAMED VOLUME 👇
+volumes:
+  db_data: # This defines a Docker named volume called 'db_data'
+# 👆 ADDED TO DEFINE THE NAMED VOLUME 👆
