@@ -8,6 +8,7 @@ module.exports = defineConfig({
     databaseDriverOptions: {
       ssl: false,
     },
+    redisUrl: process.env.REDIS_URL,
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
@@ -16,12 +17,15 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     }
   },
-  plugins: [
-        {
-      resolve: `@medusajs/redis`,
+  modules: {
+    eventBus: {
+      resolve: "@medusajs/event-bus-redis",
       options: {
-        url: process.env.REDIS_URL,
+        redisUrl: process.env.EVENTS_REDIS_URL,
       },
     },
+  },
+  plugins: [
+
   ]
 })

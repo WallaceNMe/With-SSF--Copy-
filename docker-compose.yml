@@ -13,6 +13,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
       REDIS_URL: redis://cache
+      EVENTS_REDIS_URL: redis://cache
       NODE_ENV: development
       JWT_SECRET: some_jwt_secret
       COOKIE_SECRET: some_cookie_secret
