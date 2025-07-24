@@ -32,10 +32,14 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: medusa-docker
-    # 👇 ADDED FOR DATABASE PERSISTENCE 👇
     volumes:
-      - db_data:/var/lib/postgresql/data # Mounts the named volume to the data directory
-    # 👆 ADDED FOR DATABASE PERSISTENCE 👆
+      #- db_data:/var/lib/postgresql/data # Mounts the named volume to the data directory
+      - medusa_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis
@@ -56,7 +60,7 @@ services:
     env_file:
       - ./storefront/.env.local
 
-# 👇 ADDED TO DEFINE THE NAMED VOLUME 👇
 volumes:
-  db_data: # This defines a Docker named volume called 'db_data'
-# 👆 ADDED TO DEFINE THE NAMED VOLUME 👆
+  #db_data: # This defines a Docker named volume called 'db_data'
+  medusa_postgres_data:
+    driver: local # Tells Docker to manage a local volume
